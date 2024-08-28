@@ -1,0 +1,101 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"             
+             x:Class="MonkeyFinder.View.MainPage"
+             xmlns:model="clr-namespace:MonkeyFinder.Model"
+             xmlns:viewmodel="clr-namespace:MonkeyFinder.ViewModel"
+             x:DataType="viewmodel:MonkeysViewModel"
+             Title="{Binding Title}">
+    <Grid 
+        ColumnDefinitions="*,*"
+        ColumnSpacing="5"
+        RowDefinitions="*,Auto"
+        RowSpacing="0">
+        <CollectionView ItemsSource="{Binding Monkeys}"
+                        SelectionMode="None"
+                        Grid.ColumnSpan="2">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="model:Monkey">
+                    <Grid Padding="10">
+                        <Frame HeightRequest="125" Style="{StaticResource CardView}">
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MonkeysViewModel}},
+                                    Path= GoToDetailsCommand}" CommandParameter="{Binding .}"/>
+                            </Frame.GestureRecognizers>
+                            <Grid Padding="0" ColumnDefinitions="125,*">
+                                <Image Aspect="AspectFill" Source="{Binding Image}"
+                                       WidthRequest="125"
+                                       HeightRequest="125"/>
+                                <VerticalStackLayout
+                                    Grid.Column="1"
+                                    VerticalOptions="Center"
+                                    Padding="10">
+                                    <Label Style="{StaticResource LargeLabel}" Text="{Binding Name}"/>
+                                    <Label Style="{StaticResource MediumLabel}" Text="{Binding Location}"/>
+                                </VerticalStackLayout>
+                            </Grid>
+                        </Frame>
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+        <Button Text="Get Monkeys"
+                Command="{Binding GetMonkeysCommand}"
+                IsEnabled="{Binding IsNotBusy}"
+                Grid.Row="1"
+                Grid.Column="0"
+                Style="{StaticResource ButtonOutline}"
+                Margin="8"/>
+        <ActivityIndicator IsVisible="{Binding IsBusy}"
+                           IsRunning="{Binding IsBusy}"
+                           HorizontalOptions="Fill"
+                           VerticalOptions="Center"
+                           Color="{StaticResource Primary}"
+                           Grid.RowSpan="2"
+                           Grid.ColumnSpan="2"/>
+    </Grid>
+
+    <!--CollectionView>
+        <CollectionView.ItemsSource>
+            <x:Array Type="{x:Type model:Monkey}">
+                <model:Monkey
+                    Name="Baboom"
+                    Image="https://raw.githubusercontent.com/jamesmontemagno/app-monkeys/master/baboon.jpg"
+                    Location="Africa and Asia"/>
+                <model:Monkey
+                    Name="Capuchin Monkey"
+                    Image="https://raw.githubusercontent.com/jamesmontemagno/app-monkeys/master/capuchin.jpg"
+                    Location="Central and South America"/>
+                <model:Monkey
+                    Name="Red-shanked douc"
+                    Image="https://raw.githubusercontent.com/jamesmontemagno/app-monkeys/master/douc.jpg"
+                    Location="Vietnam"/>
+            </x:Array>
+        </CollectionView.ItemsSource>
+        <CollectionView.ItemTemplate>
+            <DataTemplate x:DataType="model:Monkey">
+                <HorizontalStackLayout Padding="10">
+                    <Image
+                        Aspect="AspectFill"
+                        HeightRequest="100"
+                        Source="{Binding Image}"
+                        WidthRequest="100"/>
+                    <VerticalStackLayout VerticalOptions="Center">
+                        <Label Text="{Binding Name}" FontSize="24" TextColor="Gray"/>
+                        <Label Text="{Binding Location}" FontSize="18" TextColor="Gray"/>
+                    </VerticalStackLayout>                    
+                </HorizontalStackLayout>
+            </DataTemplate>
+        </CollectionView.ItemTemplate>
+    </CollectionView-->
+</ContentPage>
+    
+<!--Label VerticalOptions="Center" TextColor="Gray">
+    <Label.Text>
+        <MultiBinding StringFormat="{}{0} | {1}">
+            <Binding Path="Name"/>
+            <Binding Path="Location"/>
+        </MultiBinding>
+    </Label.Text>
+</Label-->
