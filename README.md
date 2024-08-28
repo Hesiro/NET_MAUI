@@ -1,2 +1,2 @@
 # NET_MAUI
-Aplicaciones en Maui
+Aplicaciones de aprendizaje en Net Maui
