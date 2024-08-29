@@ -20,6 +20,10 @@ namespace MonkeyFinder
 
 #if DEBUG
     		builder.Logging.AddDebug();
+
+            builder.Services.AddSingleton<IConnectivity>(Connectivity.Current);
+            builder.Services.AddSingleton<IGeolocation>(Geolocation.Default);
+            builder.Services.AddSingleton<IMap>(Map.Default);
 #endif
             builder.Services.AddSingleton<MonkeyService>();
             builder.Services.AddSingleton<MonkeysViewModel>();
