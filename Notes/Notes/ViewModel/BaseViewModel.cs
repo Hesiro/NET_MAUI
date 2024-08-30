@@ -6,38 +6,41 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MonkeyFinder.ViewModel
+namespace Notes.ViewModel
 {
     public class BaseViewModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler? PropertyChanged;
-
-        public void OnPropertyChanged([CallerMemberName] string? name = null) =>
+        public void OnPropertyChanged([CallerMemberName] string? name = null)=>
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
 
         bool isBusy;
         string title;
-        public bool IsBusy {  
+
+        public bool IsBusy 
+        { 
             get => isBusy; 
-            set 
-            { 
+            set{
                 if (isBusy == value) 
-                    return; 
+                    return;
+
                 isBusy = value;
                 OnPropertyChanged();
                 OnPropertyChanged(nameof(IsNotBusy));
             } 
         }
-        public bool IsNotBusy => !IsBusy;
-        public string Title { 
+        public string Title
+        {
             get => title;
-            set 
+            set
             {
-                if(title == value)
+                if(title == value) 
                     return;
-                title = value;
+
+                title = value; 
                 OnPropertyChanged();
             }
         }
+        public bool IsNotBusy => !IsBusy;
     }
 }
